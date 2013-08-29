@@ -49,3 +49,13 @@ Assume you have a table with the following schema:
     //   username: 'jmoore',
     //   email: 'jmoore@mailinator.com' }
 
+## Finder Methods
+
+* Model.find(id)
+* Model.first(field, value)
+* Model.last(field, value)
+* Model.all
+* Model.exists(field, value)
+* Model.find_some(ids)
+* Model.find_first
+* Model.find_last
