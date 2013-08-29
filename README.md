@@ -54,8 +54,8 @@ Assume you have a table with the following schema:
 * Model.find(id)
 * Model.first(field, value)
 * Model.last(field, value)
-* Model.all
+* Model.all()
 * Model.exists(field, value)
 * Model.find_some(ids)
-* Model.find_first
-* Model.find_last
+* Model.find_first()
+* Model.find_last()
