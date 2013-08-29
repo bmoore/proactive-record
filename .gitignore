@@ -1,3 +1,5 @@
+# Node.js gitignore
+
 lib-cov
 *.seed
 *.log
@@ -13,3 +15,6 @@ results
 
 npm-debug.log
 node_modules
+
+# Vim gitignore
+*.sw[po]

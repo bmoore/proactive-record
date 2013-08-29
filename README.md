@@ -38,6 +38,14 @@ Assume you have a table with the following schema:
         name: 'Brian Moore',
         username: 'bmoore',
         email: 'moore.brian.d@gmail.com'
-    })
+    });
 
     p.save();
+
+    var joe = Person.find_first('name', 'Joe Moore');
+    console.log(joe);
+
+    // { name: 'Joe Moore',
+    //   username: 'jmoore',
+    //   email: 'jmoore@mailinator.com' }
+
