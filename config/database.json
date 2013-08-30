@@ -1,0 +1,18 @@
+{
+  "development": {
+    "adapter": "postgres",
+    "host": "localhost",
+    "database": "proactive",
+    "username": "proactive",
+    "password": "proactive"
+  },
+  "production": {
+  },
+  "test": {
+    "adapter": "postgres",
+    "host": "localhost",
+    "database": "test",
+    "username": "proactive",
+    "password": "proactive"
+  }
+}

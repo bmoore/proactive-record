@@ -32,7 +32,9 @@ Assume you have a table with the following schema:
 
 **MODELS**
 
-    var Person = require('proactive-record').Person;
+    var Proactive = require('proactive-record')('postgres://username:password@host/database');
+
+    var Person = Proactive.Person
 
     var p = new Person({
         name: 'Brian Moore',

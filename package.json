@@ -9,8 +9,9 @@
   },
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-express-server": "~0.4.2",
     "grunt-contrib-watch": "~0.5.2",
-    "grunt-contrib-coffee": "~0.7.0"
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-mocha-test": "~0.6.3",
+    "chai": "~1.7.2"
   }
 }
