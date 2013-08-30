@@ -15,8 +15,10 @@ describe 'Database', ->
   it 'should have an adapter', ->
     db.adapter.connector.should.equal 'postgres://proactive:proactive@localhost/proactive'
 
-  it 'should be able to query', (done) ->
-    db.query "SELECT * FROM information_schema.tables",
+  it 'should be able to read', (done) ->
+    db.read 'SELECT * FROM information_schema.tables',
+      'tables',
+      {},
       success: (results) ->
         results.command.should.equal 'SELECT'
         done()

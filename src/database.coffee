@@ -14,6 +14,6 @@ class Database
       if error
         error(err, query, otpions)
 
-    @adapter(finder, table, params, options)
+    @adapter.read(finder, table, params, options)
 
 module.exports = Database
