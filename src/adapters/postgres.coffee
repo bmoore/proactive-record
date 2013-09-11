@@ -80,49 +80,98 @@ class PostgresAdapter
     @query(statement, options)
 
   parseSchema: (options) ->
+    schemaParts = {}
+
+    schemaParts.tables = false
     table_query = squel.select()
       .from('information_schema.tables')
       .where("table_schema = 'public'")
       .toString()
     @query table_query,
       success: (results) ->
-        console.log(results.rows)
-        tables = results.rows
+        schemaParts.tables = results.rows
+        buildSchema()
 
-        options.success({})
-
+    schemaParts.columns = false
     columns_query = squel.select()
       .from('information_schema.columns')
       .where("table_schema = 'public'")
       .toString()
     @query columns_query,
       success: (results) ->
-        console.log(results.rows)
+        schemaParts.columns = results.rows
+        buildSchema()
 
+    schemaParts.keys = false
     keys_query = squel.select()
       .from('information_schema.key_column_usage')
       .where("table_schema = 'public'")
       .toString()
     @query keys_query,
       success: (results) ->
-        console.log(results.rows)
+        schemaParts.keys = results.rows
+        buildSchema()
 
+    schemaParts.constraints = false
     constraint_query = squel.select()
       .from('information_schema.constraint_column_usage')
       .where("table_schema = 'public'")
       .toString()
     @query constraint_query,
       success: (results) ->
-        console.log(results.rows)
+        schemaParts.constraints = results.rows
+        buildSchema()
 
+    schemaParts.tconstraints = false
     table_constraints = squel.select()
       .from('information_schema.table_constraints')
       .where("table_schema = 'public'")
       .toString()
     @query table_constraints,
       success: (results) ->
-        console.log(results.rows)
+        schemaParts.tconstraints = results.rows
+        buildSchema()
 
+    buildSchema = () ->
+      built = true;
+      for part of schemaParts
+        if schemaParts[part] is false
+          built = false;
+
+      if built is true
+        models = {}
+        keys = {}
+        for table in schemaParts.tables
+          models[table.table_name] = {}
+
+        for column in schemaParts.columns
+          models[column.table_name][column.column_name] = {}
+
+        for key in schemaParts.keys
+          keys[key.constraint_name] =
+            table: key.table_name
+            foreign_key: key.column_name
+
+        for constraint in schemaParts.constraints
+          keys[constraint.constraint_name].reference = constraint.table_name
+          keys[constraint.constraint_name].column = constraint.column_name
+
+          models[constraint.table_name][constraint.column_name]
+
+        for key of keys
+          key = keys[key]
+          if key.table isnt key.reference
+            if key.foreign_key isnt key.column
+              models[key.table].belongsTo = models[key.table].belongsTo or {}
+              models[key.table].belongsTo[key.reference] = models[key.table].belongsTo[key.reference] || {}
+              models[key.table].belongsTo[key.reference][key.foreign_key] = key.column
+
+              models[key.reference].hasMany = models[key.reference].hasMany or {}
+              models[key.reference].hasMany[key.table] = models[key.reference].hasMany[key.table] or {}
+              models[key.reference].hasMany[key.table][key.column] = key.foreign_key
+
+        options.success(models)
+        
   query: (query, options) ->
     throw "query must be string" unless typeof query is 'string'
     statement =

@@ -71,7 +71,8 @@ describe 'PostgresAdapter', ->
 
   it 'should be able to read schema', (done) ->
     adapter.parseSchema
-      success: (results) ->
+      success: (models) ->
+        console.log models
         done()
 
   after (done) ->
