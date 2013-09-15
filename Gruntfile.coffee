@@ -14,6 +14,7 @@ module.exports = ->
         options:
           compilers: 'coffee-script'
           reporter: 'spec'
+          growl: true
     watch:
       coffee:
         files: ['src/**/*.coffee']

@@ -1,7 +1,14 @@
+Database = require('./database')
+
 class Model
   tableName: ''
   primaryKey: 'id'
   fields: {}
+  db: {}
+
+  initialize: () ->
+    
+    
 
   constructor: (data = {}) ->
     @_data = {}

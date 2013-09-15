@@ -12,6 +12,7 @@
     "grunt-contrib-watch": "~0.5.2",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-mocha-test": "~0.6.3",
-    "chai": "~1.7.2"
+    "chai": "~1.7.2",
+    "growl": "~1.7.0"
   }
 }
