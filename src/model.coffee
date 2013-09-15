@@ -1,14 +1,11 @@
 Database = require('./database')
+config = require('./config')
 
 class Model
   tableName: ''
   primaryKey: 'id'
   fields: {}
   db: {}
-
-  initialize: () ->
-    
-    
 
   constructor: (data = {}) ->
     @_data = {}
@@ -34,5 +31,10 @@ class Model
         @_data[field] = @_initData[field]
       else
         @_data[field] = null
+
+  @initialize: () ->
+    @db = new Database(config)
+    @db.parseSchema({})
+    true
 
 module.exports = Model

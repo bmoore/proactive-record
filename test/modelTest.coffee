@@ -6,4 +6,4 @@ Model = require(process.cwd()+'/src/model')
 describe 'Model', ->
 
   it 'should initialize', ->
-    'lol'.should.equal 'lol'
+    Model.initialize().should.equal true
