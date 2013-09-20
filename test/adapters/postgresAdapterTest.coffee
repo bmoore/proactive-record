@@ -15,7 +15,7 @@ describe 'PostgresAdapter', ->
   })
 
   before (done) ->
-    PostgresAdapterFixtures.bringUp(adapter, done)
+    PostgresAdapterFixtures.bringUp done
 
   it 'should be able to read query', (done) ->
     adapter.read 'SELECT * FROM information_schema.tables',
@@ -75,4 +75,4 @@ describe 'PostgresAdapter', ->
         done()
 
   after (done) ->
-    PostgresAdapterFixtures.tearDown(adapter, done)
+    PostgresAdapterFixtures.tearDown done

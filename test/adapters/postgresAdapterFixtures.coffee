@@ -1,4 +1,12 @@
-adapter = {}
+PostgresAdapter = require(process.cwd()+'/src/adapters/postgres')
+adapter = new PostgresAdapter({
+  adapter: 'postgres'
+  database: 'proactive'
+  username: 'proactive'
+  password: 'proactive'
+  host: 'localhost'
+})
+
 order = []
 
 dropTables = (done) ->
@@ -70,9 +78,7 @@ callNext = (done) ->
     done()
 
 module.exports = 
-  bringUp: (asset, done) ->
-    adapter = asset
-
+  bringUp: (done) ->
     order = [
       dropTables,
       createTables,
@@ -81,9 +87,7 @@ module.exports =
 
     callNext(done)
 
-  tearDown: (asset, done) ->
-    adapter = asset
-
+  tearDown: (done) ->
     order = [
       dropTables
     ]

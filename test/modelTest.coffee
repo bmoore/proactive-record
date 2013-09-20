@@ -3,7 +3,8 @@ chai.should()
 
 Model = require(process.cwd()+'/src/model')
 
+# Used to test helper methods
 describe 'Model', ->
 
-  it 'should initialize', ->
-    Model.initialize().should.equal true
+  it 'should exist', ()->
+    Model.should.equal Model

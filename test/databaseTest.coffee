@@ -15,7 +15,7 @@ describe 'Database', ->
   })
 
   before (done) ->
-    PostgresAdapterFixtures.bringUp(db.adapter, done)
+    PostgresAdapterFixtures.bringUp done
 
   it 'should have an adapter', ->
     db.adapter.connector.should.equal 'postgres://proactive:proactive@localhost/proactive'
@@ -63,4 +63,4 @@ describe 'Database', ->
         done()
 
   after (done) ->
-    PostgresAdapterFixtures.tearDown(db.adapter, done)
+    PostgresAdapterFixtures.tearDown done
