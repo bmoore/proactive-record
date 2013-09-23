@@ -14,7 +14,9 @@ dropTables = (done) ->
     success: (results) ->
       adapter.query "DROP TABLE IF EXISTS person",
         success: (results) ->
-          callNext(done)
+          adapter.query "DROP TABLE IF EXISTS rando",
+            success: (results) ->
+              callNext(done)
         error: (err) ->
           console.log(err)
           process.exit(1)
@@ -39,7 +41,15 @@ createTables = (done) ->
         FOREIGN KEY (person_id) REFERENCES person(id)
         )",
         success: (results) ->
-          callNext(done)
+          adapter.query "CREATE TABLE rando (
+            rando_id SERIAL PRIMARY KEY,
+            phrase VARCHAR(255)
+            )",
+            success: (results) ->
+              callNext(done)
+            error: (err) ->
+              console.log(err)
+              process.exit(1)
         error: (err) ->
           console.log(err)
           process.exit(1)
@@ -66,7 +76,35 @@ addRecords = (done) ->
       'llane@mailinator.com'
     )",
     success: (results) ->
-      callNext(done)
+      adapter.query "INSERT INTO rando (
+          phrase
+        ) VALUES (
+          'Brian Moore'
+        ), (
+          'jmoore@mailinator.com'
+        ), (
+          'llane'
+        )",
+        success: (results) ->
+          adapter.query "INSERT INTO address (
+              person_id,
+              street,
+              city,
+              zipcode
+            ) VALUES (
+              '1',
+              '666 Main St.',
+              'Portsmouth',
+              '03801'
+            )",
+            success: (results) ->
+              callNext(done)
+            error: (err) ->
+              console.log(err)
+              process.exit(1)
+        error: (err) ->
+          console.log(err)
+          process.exit(1)
     error: (err) ->
       console.log(err)
       process.exit(1)

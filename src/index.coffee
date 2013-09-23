@@ -9,6 +9,22 @@ class ProactiveRecord
   # Private Methods
   Model.db.parseSchema
     success: (schema) ->
+      for key of schema.constraints
+        key = schema.constraints[key]
+
+        if key.primaryKey
+          schema.models[key.table].primaryKey = key.primaryKey
+
+        if key.table isnt key.reference
+          if key.foreignKey isnt key.column
+            schema.models[key.table].belongsTo = schema.models[key.table].belongsTo or {}
+            schema.models[key.table].belongsTo[key.reference] = schema.models[key.table].belongsTo[key.reference] || {}
+            schema.models[key.table].belongsTo[key.reference][key.foreignKey] = key.column
+
+            schema.models[key.reference].hasMany = schema.models[key.reference].hasMany or {}
+            schema.models[key.reference].hasMany[key.table] = schema.models[key.reference].hasMany[key.table] or {}
+            schema.models[key.reference].hasMany[key.table][key.column] = key.foreignKey
+
       for table of schema.models
         models[table] = createModel(table, schema.models[table])
 
@@ -17,7 +33,7 @@ class ProactiveRecord
   createModel = (table, model) ->
     class tmpModel extends Model
       table: table
-      primaryKey: 'id'
+      primaryKey: model.primaryKey
       fields: model.fields
 
       constructor: (obj) ->

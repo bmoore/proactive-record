@@ -123,7 +123,10 @@ class PostgresAdapter
         for row in results.rows
           constraints[row.constraint_name] = constraints[row.constraint_name] or {}
           constraints[row.constraint_name].table = row.table_name
-          constraints[row.constraint_name].foreign_key = row.column_name
+          if row.constraint_name.search('pkey') isnt -1
+            constraints[row.constraint_name].primaryKey = row.column_name
+          else
+            constraints[row.constraint_name].foreignKey = row.column_name
 
         semaphore.keys = true
         buildSchema()
