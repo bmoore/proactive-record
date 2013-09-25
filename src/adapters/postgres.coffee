@@ -21,6 +21,8 @@ class PostgresAdapter
     insert.set(cols[i], "$#{i+1}") for i in [0...cols.length]
     statement = insert.toString()
 
+    statement += " returning * "
+
     options.values = vals
 
     @query(statement, options)

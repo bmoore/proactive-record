@@ -79,11 +79,11 @@ addRecords = (done) ->
       adapter.query "INSERT INTO rando (
           phrase
         ) VALUES (
-          'Brian Moore'
+          'The Quick Brown Fox'
         ), (
-          'jmoore@mailinator.com'
+          '12345.6789'
         ), (
-          'llane'
+          '(function() { console.log(this); })()'
         )",
         success: (results) ->
           adapter.query "INSERT INTO address (
