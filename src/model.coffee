@@ -22,6 +22,8 @@ class Model
   save: (options) ->
     if @_data[@primaryKey] is null
       @create(options)
+    else
+      @update(options)
 
   create: (options) ->
     data = {}
@@ -38,6 +40,10 @@ class Model
 
     db.create(@table, data, options)
 
+  update: (options) ->
+    db.update(@table, @primaryKey, @_data, options)
+
   delete: (options) ->
+    db.delete(@table, @primaryKey, @_data[@primaryKey], options)
 
 module.exports = Model

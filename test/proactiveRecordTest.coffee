@@ -51,6 +51,25 @@ describe 'ProactiveRecord', ->
             p.name.should.equal('Brian Moore')
             done()
 
+      it 'should be able to update', (done) ->
+        ProactiveRecord.load 'person', (Person) ->
+          Person.find 2, (p) ->
+            p.name = 'Zoidberg'
+            p.save
+              success: () ->
+                Person.find 2, (z) ->
+                  z.name.should.equal 'Zoidberg'
+                  done()
+
+      it 'should be able to delete', (done) ->
+        ProactiveRecord.load 'person', (Person) ->
+          Person.find 3, (p) ->
+            p.delete
+              success: () ->
+                Person.find 3, (z) ->
+                  (z.id is null).should.equal true
+                  done()
+
 
     describe 'Address Model', ->
       it 'should be able to create', (done) ->
@@ -66,31 +85,66 @@ describe 'ProactiveRecord', ->
               (a.id isnt null).should.equal true
               done()
 
-      it 'should be able to load', (done) ->
+      it 'should be able to read', (done) ->
         ProactiveRecord.load 'address', (Address) ->
           Address.find 1, (a) ->
             a.city.should.equal('Portsmouth')
             done()
 
+      it 'should be able to update', (done) ->
+        ProactiveRecord.load 'address', (Address) ->
+          Address.find 2, (a) ->
+            a.street = '21 Daniel St.'
+            a.save
+              success: () ->
+                Address.find 2, (z) ->
+                  z.street.should.equal '21 Daniel St.'
+                  done()
+
+      it 'should be able to delete', (done) ->
+        ProactiveRecord.load 'address', (Address) ->
+          Address.find 3, (a) ->
+            a.delete
+              success: () ->
+                Address.find 3, (z) ->
+                  (z.id is null).should.equal true
+                  done()
+
     describe 'Rando Model', ->
       it 'should be able to create', (done) ->
         ProactiveRecord.load 'rando', (Rando) ->
           r = new Rando
-            person_id: 1
-            street: '1024 Main St.'
-            city: 'Portsmouth'
-            zipcode: '03801'
+            phrase: 'Testing a new phrase'
 
           r.save
             success: () ->
               (r.rando_id isnt null).should.equal true
               done()
 
-      it 'should be able to load', (done) ->
+      it 'should be able to read', (done) ->
         ProactiveRecord.load 'rando', (Rando) ->
           Rando.find 1, (r) ->
             r.phrase.should.equal('The Quick Brown Fox')
             done()
+
+      it 'should be able to update', (done) ->
+        ProactiveRecord.load 'rando', (Rando) ->
+          Rando.find 2, (r) ->
+            r.phrase = 'Follow the white rabbit'
+            r.save
+              success: () ->
+                Rando.find 2, (z) ->
+                  z.phrase.should.equal 'Follow the white rabbit'
+                  done()
+
+      it 'should be able to delete', (done) ->
+        ProactiveRecord.load 'rando', (Rando) ->
+          Rando.find 3, (r) ->
+            r.delete
+              success: () ->
+                Rando.find 3, (z) ->
+                  (z.rando_id is null).should.equal true
+                  done()
 
 
   after (done) ->
