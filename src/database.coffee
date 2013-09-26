@@ -30,13 +30,13 @@ class Database
 
         if key.table isnt key.reference
           if key.foreignKey isnt key.column
-            schema.models[key.table].belongsTo = schema.models[key.table].belongsTo or {}
-            schema.models[key.table].belongsTo[key.reference] = schema.models[key.table].belongsTo[key.reference] || {}
-            schema.models[key.table].belongsTo[key.reference][key.foreignKey] = key.column
+            schema.models[key.table].parent = schema.models[key.table].parent or {}
+            schema.models[key.table].parent[key.reference] = schema.models[key.table].parent[key.reference] || {}
+            schema.models[key.table].parent[key.reference][key.foreignKey] = key.column
 
-            schema.models[key.reference].hasMany = schema.models[key.reference].hasMany or {}
-            schema.models[key.reference].hasMany[key.table] = schema.models[key.reference].hasMany[key.table] or {}
-            schema.models[key.reference].hasMany[key.table][key.column] = key.foreignKey
+            schema.models[key.reference].children = schema.models[key.reference].children or {}
+            schema.models[key.reference].children[key.table] = schema.models[key.reference].children[key.table] or {}
+            schema.models[key.reference].children[key.table][key.column] = key.foreignKey
 
       if success
         success(schema)

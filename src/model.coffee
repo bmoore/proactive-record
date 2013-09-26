@@ -46,4 +46,8 @@ class Model
   delete: (options) ->
     db.delete(@table, @primaryKey, @_data[@primaryKey], options)
 
+  children: (table, cb) ->
+    console.log(@hasMany)
+
+
 module.exports = Model

@@ -19,6 +19,8 @@ class ProactiveRecord
       table: table
       primaryKey: model.primaryKey
       fields: model.fields
+      hasMany: model.children
+      belongsTo: model.parent
 
       constructor: (data = {}) ->
         @_data = {}

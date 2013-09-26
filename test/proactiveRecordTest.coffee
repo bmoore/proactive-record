@@ -70,6 +70,13 @@ describe 'ProactiveRecord', ->
                   (z.id is null).should.equal true
                   done()
 
+      it 'can load children', (done) ->
+        ProactiveRecord.load 'person', (Person) ->
+          Person.find 1, (p) ->
+            p.children 'address', (addresses) ->
+              console.log(addresses)
+              done()
+
 
     describe 'Address Model', ->
       it 'should be able to create', (done) ->
