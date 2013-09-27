@@ -49,7 +49,7 @@ class Model
     table = @table || (new @).table
     primaryKey = @primaryKey || (new @).primaryKey
     db.read finder, table, {
-      primaryKey: primaryKey}
+      primaryKey: primaryKey},
       success: (results) ->
         if results.rows.length > 0
           ret = []

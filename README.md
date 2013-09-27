@@ -1,6 +1,6 @@
 # proactive-record - Beyond Active Record
 
-A tool that defines your database models for you.
+An ORM that defines your database models for you.
 
 ## Features
 
