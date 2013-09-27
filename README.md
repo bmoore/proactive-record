@@ -55,9 +55,9 @@ Assume you have a table with the following schema:
 ## Finder Methods
 
 * Model.find(finder)
-** finder can be:
-** integer,
-** array of integers,
-** {column: value} objects
+ * finder can be:
+ * integer,
+ * array of integers,
+ * {column: value} objects
 * Model.all() // TBD
 * Model.exists(field, value) // TBD
