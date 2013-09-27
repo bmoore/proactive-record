@@ -36,6 +36,9 @@ class PostgresAdapter
         .from(table)
       if Array.isArray finder
         select.where("#{params.primaryKey} IN ?", finder)
+      else if typeof finder is 'object'
+        for key of finder
+          select.where("#{key} = ?", finder[key])
       else
         select.where("#{params.primaryKey} = $1")
           .limit(1)

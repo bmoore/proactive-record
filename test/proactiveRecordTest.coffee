@@ -70,13 +70,12 @@ describe 'ProactiveRecord', ->
                   (z.id is null).should.equal true
                   done()
 
-      it 'can load children', (done) ->
+      it 'should load children', (done) ->
         ProactiveRecord.load 'person', (Person) ->
           Person.find 1, (p) ->
             p.children 'address', (addresses) ->
-              console.log(addresses)
+              addresses[0].city.should.equal "Portsmouth"
               done()
-
 
     describe 'Address Model', ->
       it 'should be able to create', (done) ->
@@ -117,6 +116,13 @@ describe 'ProactiveRecord', ->
                   (z.id is null).should.equal true
                   done()
 
+      it 'should load parent', (done) ->
+        ProactiveRecord.load 'address', (Address) ->
+          Address.find 1, (a) ->
+            a.parent 'person', (person) ->
+              person.name.should.equal "Brian Moore"
+              done()
+
     describe 'Rando Model', ->
       it 'should be able to create', (done) ->
         ProactiveRecord.load 'rando', (Rando) ->
@@ -152,7 +158,6 @@ describe 'ProactiveRecord', ->
                 Rando.find 3, (z) ->
                   (z.rando_id is null).should.equal true
                   done()
-
 
   after (done) ->
     PostgresAdapterFixtures.tearDown done

@@ -3,20 +3,65 @@ Database = require('./database')
 config = require('./config')
 
 class Model
+  # Private Variables
   db = new Database(config)
+  models = {}
+
+  # Private Methods
+  createModel = (table, model) ->
+    class tmpModel extends Model
+      table: table
+      primaryKey: model.primaryKey
+      fields: model.fields
+      hasMany: model.children
+      belongsTo: model.parent
+
+      constructor: (data = {}) ->
+        @_data = {}
+        for field of @fields then do (field) =>
+          Object.defineProperty @, field,
+            enumerable: true
+            configurable: true
+            get: ->
+              @_data[field] || null
+            set: (val) ->
+              return if field is @primaryKey
+              if @_data[field] isnt val
+                @_data[field] = val
+
+          @_data[field] = data[field] || null
+
+    return tmpModel
 
   # Static Methods
   @parseSchema: (options) ->
+    success = options.success
+    options.success = (schema) ->
+      for table of schema.models
+        models[table] = createModel(table, schema.models[table])
+      success(schema) if success
     db.parseSchema options
 
-  @find: (ids, success) ->
-    klass = @
-    inst = new @
-    db.read ids, inst.table, {
-      primaryKey: inst.primaryKey}
+  @getModel: (model) ->
+    models[model]
+
+  @find: (finder, success) ->
+    table = @table || (new @).table
+    primaryKey = @primaryKey || (new @).primaryKey
+    db.read finder, table, {
+      primaryKey: primaryKey}
       success: (results) ->
-        inst = new klass results.rows[0]
-        success(inst)
+        if results.rows.length > 0
+          ret = []
+          for row in results.rows
+            ret.push new models[table] row
+
+          if ret.length < 2
+            ret = ret[0] 
+        else
+          ret = new models[table]
+
+        success(ret)
 
   # Instance Methods
   save: (options) ->
@@ -47,7 +92,25 @@ class Model
     db.delete(@table, @primaryKey, @_data[@primaryKey], options)
 
   children: (table, cb) ->
-    console.log(@hasMany)
+    finder = {}
+    model = models[table]
 
+    for key of @hasMany[table]
+      child_key = @hasMany[table][key]
+      finder[child_key] = @_data[@primaryKey]
+
+    model.find finder, (children) ->
+      children = [children] if not Array.isArray children
+      cb(children)
+
+  parent: (table, cb) ->
+    finder = []
+    model = models[table]
+
+    for key of @belongsTo[table]
+      finder.push @_data[key]
+
+    model.find finder, (parent) ->
+      cb(parent)
 
 module.exports = Model
