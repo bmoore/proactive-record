@@ -32,32 +32,32 @@ Assume you have a table with the following schema:
 
 **MODELS**
 
-    var Proactive = require('proactive-record')('postgres://username:password@host/database');
+    var Proactive = require('proactive-record');
 
-    var Person = Proactive.Person
+    Proactive.load('person', function(Person) {
+        var p = new Person({
+            name: 'Brian Moore',
+            username: 'bmoore',
+            email: 'moore.brian.d@gmail.com'
+        });
 
-    var p = new Person({
-        name: 'Brian Moore',
-        username: 'bmoore',
-        email: 'moore.brian.d@gmail.com'
+        p.save();
+
+        Person.find({name: "Brian Moore"}, function(p) {
+            console.log(p)
+            // { name: 'Brian Moore',
+            //   username: 'bmoore',
+            //   email: 'moore.brian.d@gmail.com'}
+        });
     });
 
-    p.save();
-
-    var joe = Person.find_first('name', 'Joe Moore');
-    console.log(joe);
-
-    // { name: 'Joe Moore',
-    //   username: 'jmoore',
-    //   email: 'jmoore@mailinator.com' }
 
 ## Finder Methods
 
-* Model.find(id)
-* Model.first(field, value)
-* Model.last(field, value)
-* Model.all()
-* Model.exists(field, value)
-* Model.find_some(ids)
-* Model.find_first()
-* Model.find_last()
+* Model.find(finder)
+** finder can be:
+** integer,
+** array of integers,
+** {column: value} objects
+* Model.all() // TBD
+* Model.exists(field, value) // TBD
