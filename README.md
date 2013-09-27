@@ -61,3 +61,9 @@ Assume you have a table with the following schema:
  * {column: value} objects
 * Model.all() // TBD
 * Model.exists(field, value) // TBD
+
+## Other Methods
+* .save() // Create and Update
+* .delete() // Remove Record
+* .children('address', function(addresses){}) // Access Child Table Records
+* .parent('company', function(company){}) // Access Parent Table Record
