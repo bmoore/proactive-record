@@ -2,6 +2,8 @@
 
 An ORM that defines your database models for you.
 
+[![NPM](https://nodei.co/npm/proactive-record.png?downloads=true)](https://nodei.co/npm/proactive-record)
+
 ## Features
 
 * Works in node.js
