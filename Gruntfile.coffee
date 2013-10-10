@@ -29,3 +29,4 @@ module.exports = ->
 
   @registerTask 'default', ['dev']
   @registerTask 'test', ['mochaTest', 'watch:mocha']
+  @registerTask 'build', ['coffee:dev']

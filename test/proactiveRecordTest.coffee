@@ -57,6 +57,7 @@ describe 'ProactiveRecord', ->
             p.name = 'Zoidberg'
             p.save
               success: () ->
+                p.id.should.equal 2
                 Person.find 2, (z) ->
                   z.name.should.equal 'Zoidberg'
                   done()
@@ -103,6 +104,7 @@ describe 'ProactiveRecord', ->
             a.street = '21 Daniel St.'
             a.save
               success: () ->
+                a.id.should.equal 2
                 Address.find 2, (z) ->
                   z.street.should.equal '21 Daniel St.'
                   done()
@@ -146,6 +148,7 @@ describe 'ProactiveRecord', ->
             r.phrase = 'Follow the white rabbit'
             r.save
               success: () ->
+                r.rando_id.should.equal 2
                 Rando.find 2, (z) ->
                   z.phrase.should.equal 'Follow the white rabbit'
                   done()

@@ -50,13 +50,13 @@ class PostgresAdapter
 
   update: (table, primaryKey, data, options) ->
     id = data[primaryKey]
-    delete data[primaryKey]
 
     cols = []
     vals = []
     for col of data
-      cols.push col
-      vals.push data[col]
+      if col isnt primaryKey
+        cols.push col
+        vals.push data[col]
 
     update = squel.update(usingValuePlaceholders: true)
       .table(table)
