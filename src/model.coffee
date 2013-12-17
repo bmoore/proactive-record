@@ -45,6 +45,9 @@ class Model
   @getModel: (model) ->
     models[model]
 
+  @all: (success) ->
+    @find 'all', success
+
   @find: (finder, success) ->
     table = @table || (new @).table
     primaryKey = @primaryKey || (new @).primaryKey

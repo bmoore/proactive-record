@@ -36,9 +36,9 @@ describe 'ProactiveRecord', ->
       it 'should be able to create', (done) ->
         ProactiveRecord.load 'person', (Person) ->
           p = new Person
-            name: 'Brian Moore'
-            username: 'bmoore'
-            email: 'moore.brian.d@gmail.com'
+            name: 'B Monizzle'
+            username: 'bmoney'
+            email: 'bmonizzle@gmail.com'
 
           p.save
             success: () ->
@@ -77,6 +77,12 @@ describe 'ProactiveRecord', ->
             p.children 'address', (addresses) ->
               addresses[0].city.should.equal "Portsmouth"
               done()
+
+      it 'should read all', (done) ->
+        ProactiveRecord.load 'person', (Person) ->
+          Person.all (people) ->
+            people.length.should.equal 3
+            done()
 
     describe 'Address Model', ->
       it 'should be able to create', (done) ->
@@ -125,6 +131,12 @@ describe 'ProactiveRecord', ->
               person.name.should.equal "Brian Moore"
               done()
 
+      it 'should read all', (done) ->
+        ProactiveRecord.load 'address', (Address) ->
+          Address.all (addresses) ->
+            addresses.length.should.equal 2
+            done()
+
     describe 'Rando Model', ->
       it 'should be able to create', (done) ->
         ProactiveRecord.load 'rando', (Rando) ->
@@ -161,6 +173,12 @@ describe 'ProactiveRecord', ->
                 Rando.find 3, (z) ->
                   (z.rando_id is null).should.equal true
                   done()
+
+      it 'should read all', (done) ->
+        ProactiveRecord.load 'rando', (Rando) ->
+          Rando.all (randos) ->
+            randos.length.should.equal 3
+            done()
 
   after (done) ->
     PostgresAdapterFixtures.tearDown done

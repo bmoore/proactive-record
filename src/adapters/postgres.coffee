@@ -29,8 +29,11 @@ class PostgresAdapter
 
   read: (finder, table, params, options) ->
     # finder is query
-    if typeof finder is 'string' and finder.match(/^select/i)?
-      statement = finder
+    if typeof finder is 'string'
+      if finder.match(/^select/i)?
+        statement = finder
+      else if finder is 'all'
+        statement = squel.select().from(table).toString()
     else
       select = squel.select(usingValuePlaceholders: true)
         .from(table)
