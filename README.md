@@ -45,8 +45,8 @@ Assume you have a table with the following schema:
 
         p.save();
 
-        Person.find({name: "Brian Moore"}, function(p) {
-            console.log(p)
+        Person.find({name: "Brian Moore"}, function(brian) {
+            console.log(brian)
             // { name: 'Brian Moore',
             //   username: 'bmoore',
             //   email: 'moore.brian.d@gmail.com'}
@@ -56,13 +56,18 @@ Assume you have a table with the following schema:
 
 ## Finder Methods
 
-* Model.find(finder)
+* Model.find(finder, success)
  * finder can be:
- * integer,
- * array of integers,
- * {column: value} objects
-* Model.all() // TBD
-* Model.exists(field, value) // TBD
+  * integer,
+  * array of integers,
+  * {column: value} objects
+ * success parameter is:
+  * an object when one record is found
+  * an array when many records are found
+* Model.all(success)
+ * success parameter is:
+  * an object when one record is found
+  * an array when many records are found
 
 ## Other Methods
 * .save() // Create and Update
