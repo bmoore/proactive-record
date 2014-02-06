@@ -35,7 +35,7 @@ class PostgresAdapter
     else if finder is 'all'
       statement = squel.select().from(table).toString()
     else
-      select = squel.select(usingValuePlaceholders: true)
+      select = squel.select()
         .from(table)
       if Array.isArray finder
         select.where("#{params.primaryKey} IN ?", finder)
