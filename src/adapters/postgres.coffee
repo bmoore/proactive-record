@@ -40,7 +40,7 @@ class PostgresAdapter
         select.where("#{params.primaryKey} IN ?", finder)
       else if typeof finder is 'object'
         for key of finder
-          select.where("#{key} = ?", finder[key])
+          select.where("#{key} = ?", finder[key]).toParam()
       else
         select.where("#{params.primaryKey} = $1")
           .limit(1)

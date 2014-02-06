@@ -1,7 +1,7 @@
 {
   "name": "proactive-record",
   "description": "An ORM that defines your database models for you.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "Brian Moore",
     "email": "moore.brian.d@gmail.com"
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "pg": "2.3.0",
-    "squel": "1.1.3"
+    "squel": "2.x"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
