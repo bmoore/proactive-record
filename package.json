@@ -1,7 +1,7 @@
 {
   "name": "proactive-record",
   "description": "An ORM that defines your database models for you.",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": {
     "name": "Brian Moore",
     "email": "moore.brian.d@gmail.com"

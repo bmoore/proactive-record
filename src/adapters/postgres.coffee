@@ -1,5 +1,6 @@
 pg = require('pg')
 squel = require('squel')
+squel.useFlavour('postgres')
 
 md5 = (str) ->
   require('crypto').createHash('md5').update(str).digest('hex')
@@ -40,7 +41,7 @@ class PostgresAdapter
         select.where("#{params.primaryKey} IN ?", finder)
       else if typeof finder is 'object'
         for key of finder
-          select.where("#{key} = ?", finder[key]).toParam()
+          select.where("#{key} = ?", finder[key])
       else
         select.where("#{params.primaryKey} = $1")
           .limit(1)
